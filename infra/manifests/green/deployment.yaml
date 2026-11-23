@@ -1,0 +1,44 @@
+# 绿环境（部署到 green 集群）
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-green-app
+  namespace: blue-green
+  labels:
+    app: blue-green-app
+    color: green
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: blue-green-app
+  template:
+    metadata:
+      labels:
+        app: blue-green-app
+        color: green
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      automountServiceAccountToken: false
+      containers:
+        - name: blue-green-app
+          image: hashicorp/http-echo:latest
+          args: ["-text=green", "-listen=:3000"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - NET_RAW
+            seccompProfile:
+              type: RuntimeDefault
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi

@@ -1,0 +1,9 @@
+# Terraform 本地状态与依赖缓存（发布时不提交）
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.*
+infra/terraform.tfvars
+
+# 凭据（不提交任何私钥）
+*.pem
+*.key

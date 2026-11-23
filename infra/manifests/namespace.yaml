@@ -1,0 +1,5 @@
+# 两个集群各部署一次本清单（kubectl apply 到对应集群）
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: blue-green
