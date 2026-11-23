@@ -1,0 +1,9 @@
+# 复制为 terraform.tfvars 后按需调整；真实 tfvars 不要提交到仓库
+# 凭据不写在此文件：在部署机 shell 用 HW_ACCESS_KEY / HW_SECRET_KEY 环境变量传入
+region        = "cn-north-4"
+project_name  = "cce-shared-subnets"
+vpc_cidr      = "10.0.0.0/16"
+node_flavor   = "s6.large.2"
+node_count    = 1
+elb_az        = "cn-north-4a"
+elb_bandwidth = 5

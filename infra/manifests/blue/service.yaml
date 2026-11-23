@@ -1,0 +1,19 @@
+# 蓝环境（部署到 blue 集群）——监听共享 ELB 的 80 端口
+apiVersion: v1
+kind: Service
+metadata:
+  name: blue-green-service
+  namespace: blue-green
+  annotations:
+    # 复用 Terraform 创建的共享 ELB；<ELB_ID> 用 `terraform output -raw shared_elb_id` 替换
+    kubernetes.io/elb.id: "<ELB_ID>"
+    kubernetes.io/elb.class: "performance"
+spec:
+  type: LoadBalancer
+  selector:
+    app: blue-green-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+      protocol: TCP
